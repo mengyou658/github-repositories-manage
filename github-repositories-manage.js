@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Github项目批量删除
 // @namespace    https://github.com/mengyou658/github-repositories-manage
-// @version      1.1.2
+// @version      1.1.4
 // @description  Github项目批量删除，fork的项目太多了
 // @author       yunchaoq/mengyou658
 // @license      GPL License
@@ -21,21 +21,53 @@
   var pathname = window.location.pathname;
   var userName = pathname.replace("/", "");
   var checkList = [];
-  var tmpCode = sessionStorage.getItem("gitto");
+  var tmpCode = localStorage.getItem("gitto");
 
-  if (location.indexOf("?tab=repositories") > -1) {
+  var detailPageBodyTmp = $('ul[class*="UnderlineNav-body"]');
+  var detailPageFlag = detailPageBodyTmp.length && detailPageBodyTmp.find('span[data-content="Settings"]').length;
+  let homePageFlag = location.indexOf("?tab=repositories") > -1;
+  console.log('detailPageFlag', detailPageFlag, homePageFlag)
+  if (homePageFlag || detailPageFlag) {
     init();
   }
 
   function init() {
-    if (!tmpCode) {
+    if (homePageFlag) {
+      $(".UnderlineNav-body:first").append('<a href="javascript:void(0);" id="user-repositories-code" class="UnderlineNav-item btn btn-primary " style="background-color: #2ea44f; margin-right: 10px;">输入token</a>');
+    }
+    if (detailPageFlag) {
+      detailPageBodyTmp.find('li:last').append('<a href="javascript:void(0);" id="user-repositories-code" class="UnderlineNav-item btn btn-primary " style="background-color: #2ea44f; margin-right: 10px;">输入token</a>');
+    }
+    layer.tips('<a href="https://github.com/settings/tokens" target="_blank" style="color: red;">点击这里是申请，请至少选择Delete Repos</a>', '#user-repositories-code', {
+      tips: [1, '#2ea44f'] //还可配置颜色
+      ,tipsMore:true
+      ,time: 0,
+    });
+    $('#user-repositories-code').on('click', function () {
+      layer.tips('<a href="https://github.com/settings/tokens" target="_blank" style="color: red;">点击这里是申请，请至少选择Delete Repos</a>', '#user-repositories-code', {
+        tips: [1,'#2ea44f'] //还可配置颜色
+        ,tipsMore:true
+        ,time: 0,
+      });
       layer.prompt({
-        title: '输入申请的token，默认一次使用，关闭浏览器后失效，并确认<a href="https://github.com/settings/tokens" target="_blank">点击这里是申请，请至少选择Delete Repos</a>',
+        title: '输入申请的token，并点击确认，<a href="https://github.com/settings/tokens" target="_blank">点击这里是申请，请至少选择Delete Repos</a>',
         formType: 1
       }, function (token, index) {
         if (token) {
           tmpCode = token;
-          sessionStorage.setItem('gitto', tmpCode);
+          localStorage.setItem('gitto', tmpCode);
+          layer.closeAll();
+        }
+      });
+    });
+    if (!tmpCode) {
+      layer.prompt({
+        title: '输入申请的token，并点击确认，<a href="https://github.com/settings/tokens" target="_blank">点击这里是申请，请至少选择Delete Repos</a>',
+        formType: 1
+      }, function (token, index) {
+        if (token) {
+          tmpCode = token;
+          localStorage.setItem('gitto', tmpCode);
           layer.closeAll();
         }
       });
@@ -58,8 +90,13 @@
           find.prop('checked', true);
           checkList.push(href);
         }
-        if (!$('#user-repositories-delete').length && checkList.length) {
-          $(".UnderlineNav-body:first").append('<a href="javascript:void(0);" id="user-repositories-delete" class="UnderlineNav-item btn btn-primary ">批量删除</a>');
+        if (!$('#user-repositories-delete').length && checkList.length && tmpCode) {
+          if (homePageFlag) {
+            $(".UnderlineNav-body:first").append('<a href="javascript:void(0);" id="user-repositories-delete" class="UnderlineNav-item btn btn-primary " style="background-color: #2ea44f;">批量删除</a>');
+          }
+          if (detailPageFlag) {
+            detailPageBodyTmp.find('li:last').append('<a href="javascript:void(0);" id="user-repositories-delete" class="UnderlineNav-item btn btn-primary " style="background-color: #2ea44f;">批量删除</a>');
+          }
           $("#user-repositories-delete").on('click', function () {
             var resList = {};
             var count = 0;
@@ -106,6 +143,8 @@
             });
 
           });
+        } else {
+          $("#user-repositories-delete").remove();
         }
       }
     });
