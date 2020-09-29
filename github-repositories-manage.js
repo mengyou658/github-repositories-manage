@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Github项目批量删除
 // @namespace    https://github.com/mengyou658/github-repositories-manage
-// @version      1.1.0
+// @version      1.1.1
 // @description  Github项目批量删除，fork的项目太多了
 // @author       yunchaoq/mengyou658
 // @license      GPL License
@@ -22,7 +22,6 @@
   var userName = pathname.replace("/", "");
   var checkList = [];
   var tmpCode = sessionStorage.getItem("gitto");
-  var layer = layui.layer;
 
   if (location.indexOf("?tab=repositories") > -1){
     init();
@@ -65,6 +64,7 @@
               $.ajax({
                 url: url,
                 method: 'DELETE',
+                async: false,
                 "headers": {
                   "Accept": "application/vnd.github.v3+json",
                   "Authorization": "token " + tmpCode
