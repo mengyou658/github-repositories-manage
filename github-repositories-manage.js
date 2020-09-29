@@ -2,14 +2,13 @@
 // @name         Github项目批量删除
 // @namespace    https://github.com/mengyou658/github-repositories-manage
 // @version      1.1.0
-// @description  Github项目批量删除
+// @description  Github项目批量删除，fork的项目太多了
 // @author       yunchaoq/mengyou658
 // @license      GPL License
 // @match        *://github.com/*
 // @require      https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js
-// @require      https://www.layuicdn.com/layui-v2.5.6/layui.all.js
-// @resource     layuiCss https://www.layuicdn.com/layui-v2.5.6/css/layui.css
-// @resource     layerCss https://www.layuicdn.com/layui-v2.5.6/css/modules/layer/default/layer.css?v=3.1.1
+// @require      https://cdn.bootcdn.net/ajax/libs/layer/3.1.1/layer.min.js
+// @resource     layerCss https://cdn.bootcdn.net/ajax/libs/layer/3.1.1/theme/default/layer.min.css
 // @grant        GM_addStyle
 // @grant        GM_setClipboard
 // @grant        GM_getResourceText
