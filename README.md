@@ -1,7 +1,7 @@
 # github-repositories-manage
 github repositories manage delete github仓库管理删除 油猴 脚本
 
-**感觉不错，就给个star吧，送人玫瑰手有余香😘**
+**感觉不错，就给个star呗，送人玫瑰手有余香😘么么哒**
 
 #### 安装地址
 [https://greasyfork.org/zh-CN/scripts/412188-github%E9%A1%B9%E7%9B%AE%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4](https://greasyfork.org/zh-CN/scripts/412188-github%E9%A1%B9%E7%9B%AE%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4)
