@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Github项目批量删除
 // @namespace    https://github.com/mengyou658/github-repositories-manage
-// @version      1.1.6
+// @version      1.1.7
 // @description  Github项目批量删除，fork的项目太多了，注意：需要先申请操作token，申请地址https://github.com/settings/tokens，请至少选择Delete Repos，如果频繁出现删除失败，请重新生成token（github有限制）
 // @author       yunchaoq/mengyou658
 // @license      GPL License
@@ -25,7 +25,7 @@
 
   var detailPageBodyTmp = $('ul[class*="UnderlineNav-body"]');
   var detailPageFlag = detailPageBodyTmp.length && detailPageBodyTmp.find('span[data-content="Settings"]').length;
-  let homePageFlag = location.indexOf("?tab=repositories") > -1;
+  let homePageFlag = location.indexOf("tab=repositories") > -1;
   if (homePageFlag || detailPageFlag) {
     init();
   }
